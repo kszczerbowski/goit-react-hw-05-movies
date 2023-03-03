@@ -1,0 +1,24 @@
+.container {
+    height: 100vh;
+    font-size: 40px;
+    color: #010101;
+    text-align: center;
+}
+
+.header {
+    width: 100%;
+}
+
+.navigation {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    background-color: #ADD8E6;
+}
+
+.navLink {
+    text-decoration: none;
+    margin: 10px;
+    color: #00008b;
+    font-weight: 700;
+}
