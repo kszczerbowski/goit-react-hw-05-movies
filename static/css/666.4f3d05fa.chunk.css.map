@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/666.4f3d05fa.chunk.css","mappings":"AAAA,0BAGE,gBAAiB,CAFjB,eAAgB,CAChB,SAEF","sources":["pages/NotFound/NotFound.module.css"],"sourcesContent":[".notFound {\n  max-height: 80vh;\n  width: 70%;\n  aspect-ratio: 1.7;\n}\n"],"names":[],"sourceRoot":""}
