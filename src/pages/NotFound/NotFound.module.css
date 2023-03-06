@@ -1,5 +1,5 @@
 .notFound {
-    font-size: 50px;
-    color: steelblue;
-    margin: 0px auto;
+    max-height: 80vh;
+    width: 70%;
+    aspect-ratio: 1.7;
 }

@@ -4,10 +4,7 @@ import css from './NotFound.module.css';
 export const NotFound = () => {
   return (
     <>
-      <h1 className={css.notFound}>
-        You have reached the world's edge, none but devils play past here...
-      </h1>
-      <h5>In other words: page not found</h5>
+      <img className={css.notFound} src='https://media.istockphoto.com/id/1455692874/vector/cat-error-page-asleep-kitten-in-box-with-404-sign-empty-pages-not-found-computer-internet.jpg?b=1&s=612x612&w=0&k=20&c=Wi0XR7u-JFXISDiu4Ko7ytRaU7xjtUI1zNQJUnaceXc=' alt='page not found'/>
     </>
   );
 };

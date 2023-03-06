@@ -3,5 +3,5 @@ import css from './Movies.module.css'
 
 export const Movies = () => {
     
-    return
+    return <h2>Movies</h2>
 }
