@@ -17,6 +17,7 @@ export const App = () => {
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [shouldLoadSearchedMovies, setShouldLoadSearchedMovies] =
     useState(false);
+  // eslint-disable-next-line
   const [searchParams, setSearchParams] = useSearchParams();
 
   function clearMoviesPage() {

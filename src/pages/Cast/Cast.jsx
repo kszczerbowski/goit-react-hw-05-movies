@@ -22,7 +22,7 @@ const Cast = ({ getMovieCast, movieCast }) => {
                   ? `https://image.tmdb.org/t/p/original${person.profile_path}`
                   : `https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png`
               }
-              alt={`Photo of ${person.name}`}
+              alt={`${person.name}`}
             />
             <p>{person.name}</p>
             <p>Character: {person.character}</p>

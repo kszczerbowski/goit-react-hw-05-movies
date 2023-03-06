@@ -8,7 +8,7 @@ const Movies = ({
   searchedMovies,
   shouldLoadSearchedMovies,
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const paramsQuery = searchParams.get('query');
   useEffect(() => {
     if (paramsQuery !== null) getSearchedMovies(paramsQuery);
