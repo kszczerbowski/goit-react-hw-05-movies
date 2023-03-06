@@ -12,6 +12,7 @@ const Movies = ({
   const paramsQuery = searchParams.get('query');
   useEffect(() => {
     if (paramsQuery !== null) getSearchedMovies(paramsQuery);
+    // eslint-disable-next-line
   }, []);
 
   function handleSubmit(event) {

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 const Home = ({ trendingMovies, clearMoviesPage }) => {
   useEffect(() => {
     clearMoviesPage();
+    // eslint-disable-next-line
   }, []);
   return (
     <>

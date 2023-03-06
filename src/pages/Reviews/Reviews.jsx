@@ -6,6 +6,7 @@ const Reviews = ({ getMovieReviews, movieReviews }) => {
   const { movieId } = useParams();
   useEffect(() => {
     getMovieReviews(movieId);
+    // eslint-disable-next-line
   }, []);
   return (
     <ul>

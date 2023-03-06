@@ -7,6 +7,7 @@ const Cast = ({ getMovieCast, movieCast }) => {
   const { movieId } = useParams();
   useEffect(() => {
     getMovieCast(movieId);
+  // eslint-disable-next-line
   }, []);
 
   return (
