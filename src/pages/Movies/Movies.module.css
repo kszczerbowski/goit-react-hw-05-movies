@@ -1,0 +1,56 @@
+.searchButton {
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #4676d7;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  background: #1d49aa;
+}
+
+.searchButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #cbd6ee;
+}
+
+.searchInput {
+  min-height: 27px;
+  margin-left: 10px;
+  margin-right: 10px;
+  min-width: 300px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.moviesForm {
+  text-align: left;
+}
+
+.searchedMoviesList {
+  list-style: none;
+  width: calc(100%-40px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+  padding: 0px;
+  margin: 20px;
+}
+
+.poster {
+  width: 300px;
+  height: 450px;
+}
+
+.movieLink {
+  text-decoration: none;
+}
+
+.movieTitle {
+  color: rgb(0, 0, 139);
+  font-size: 25px;
+}
