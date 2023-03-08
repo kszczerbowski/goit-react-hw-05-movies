@@ -1,17 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import css from './Home.module.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios'
 
-const Home = ({ trendingMovies, clearMoviesPage }) => {
+const Home = ({ clearMoviesPage }) => {
+  const [trendingMovies, setTrendingMovies] = useState([]);
+
+  async function getTrendingMovies() {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/trending/movie/day?api_key=0943ad551b04628807de14e8fdbef059`
+    );
+    const moviesArray = response.data.results;
+    setTrendingMovies(moviesArray);
+  }
+
   useEffect(() => {
     clearMoviesPage();
+    getTrendingMovies();
     // eslint-disable-next-line
   }, []);
+
   return (
     <>
       <ul className={css.trendingMoviesList}>
-        {trendingMovies.length &&
+        {!!trendingMovies.length &&
           trendingMovies.map(movie => (
             <li key={movie.id}>
               <Link

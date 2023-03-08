@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import css from './App.module.css';
 import { Route, Routes, NavLink, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -10,7 +10,6 @@ const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
 const Reviews = lazy(() => import('../pages/Reviews/Reviews'));
 
 export const App = () => {
-  const [trendingMovies, setTrendingMovies] = useState([]);
   const [actualMovie, setActualMovie] = useState({});
   const [actualMovieCast, setActualMovieCast] = useState([]);
   const [actualMovieReviews, setActualMovieReviews] = useState([]);
@@ -23,14 +22,6 @@ export const App = () => {
   function clearMoviesPage() {
     setSearchedMovies([]);
     setShouldLoadSearchedMovies(false);
-  }
-
-  async function getTrendingMovies() {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/trending/movie/day?api_key=0943ad551b04628807de14e8fdbef059`
-    );
-    const moviesArray = response.data.results;
-    setTrendingMovies(moviesArray);
   }
 
   async function getMovieDetails(id) {
@@ -62,10 +53,6 @@ export const App = () => {
     setSearchParams({ query: query });
     setShouldLoadSearchedMovies(true);
   }
-
-  useEffect(() => {
-    getTrendingMovies();
-  }, []);
 
   return (
     <div className={css.container}>
@@ -102,12 +89,7 @@ export const App = () => {
         <Routes>
           <Route
             path="/"
-            element={
-              <Home
-                trendingMovies={trendingMovies}
-                clearMoviesPage={clearMoviesPage}
-              />
-            }
+            element={<Home clearMoviesPage={clearMoviesPage} />}
           />
           <Route
             path="/movies"
