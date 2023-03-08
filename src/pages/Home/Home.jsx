@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios'
 
-const Home = ({ clearMoviesPage }) => {
+const Home = (
+  // { clearMoviesPage }
+  ) => {
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   async function getTrendingMovies() {
@@ -16,7 +18,7 @@ const Home = ({ clearMoviesPage }) => {
   }
 
   useEffect(() => {
-    clearMoviesPage();
+    // clearMoviesPage();
     getTrendingMovies();
     // eslint-disable-next-line
   }, []);

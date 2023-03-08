@@ -1,6 +1,6 @@
 import React, { useState, lazy, Suspense } from 'react';
 import css from './App.module.css';
-import { Route, Routes, NavLink, useSearchParams } from 'react-router-dom';
+import { Route, Routes, NavLink } from 'react-router-dom';
 import axios from 'axios';
 const Cast = lazy(() => import('../pages/Cast/Cast'));
 const Home = lazy(() => import('../pages/Home/Home'));
@@ -13,16 +13,8 @@ export const App = () => {
   const [actualMovie, setActualMovie] = useState({});
   const [actualMovieCast, setActualMovieCast] = useState([]);
   const [actualMovieReviews, setActualMovieReviews] = useState([]);
-  const [searchedMovies, setSearchedMovies] = useState([]);
-  const [shouldLoadSearchedMovies, setShouldLoadSearchedMovies] =
-    useState(false);
+  useState(false);
   // eslint-disable-next-line
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  function clearMoviesPage() {
-    setSearchedMovies([]);
-    setShouldLoadSearchedMovies(false);
-  }
 
   async function getMovieDetails(id) {
     const response = await axios.get(
@@ -43,15 +35,6 @@ export const App = () => {
     const response = await axios.get(`
     https://api.themoviedb.org/3/movie/${id}/credits?api_key=0943ad551b04628807de14e8fdbef059&language=en-US`);
     setActualMovieCast(response.data.cast);
-  }
-
-  async function getSearchedMovies(query) {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=0943ad551b04628807de14e8fdbef059&language=en-US&query=${query}&page=1&include_adult=false`
-    );
-    setSearchedMovies(response.data.results);
-    setSearchParams({ query: query });
-    setShouldLoadSearchedMovies(true);
   }
 
   return (
@@ -87,20 +70,8 @@ export const App = () => {
           </nav>
         </header>
         <Routes>
-          <Route
-            path="/"
-            element={<Home clearMoviesPage={clearMoviesPage} />}
-          />
-          <Route
-            path="/movies"
-            element={
-              <Movies
-                getSearchedMovies={getSearchedMovies}
-                searchedMovies={searchedMovies}
-                shouldLoadSearchedMovies={shouldLoadSearchedMovies}
-              />
-            }
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
           <Route
             path="/movies/:movieId"
             element={

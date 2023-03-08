@@ -1,19 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import css from './Movies.module.css';
 import { Link, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios'
 
-const Movies = ({
-  getSearchedMovies,
-  searchedMovies,
-  shouldLoadSearchedMovies,
-}) => {
-  const [searchParams] = useSearchParams();
+const Movies = () => {
+  const [searchedMovies, setSearchedMovies] = useState([]);
+  // const [shouldLoadSearchedMovies, setShouldLoadSearchedMovies] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams();
+
+
   const paramsQuery = searchParams.get('query');
   useEffect(() => {
     if (paramsQuery !== null) getSearchedMovies(paramsQuery);
     // eslint-disable-next-line
   }, []);
+
+  // function clearMoviesPage() {
+  //   setSearchedMovies([]);
+  //   setShouldLoadSearchedMovies(false);
+  // }
+
+  async function getSearchedMovies(query) {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/search/movie?api_key=0943ad551b04628807de14e8fdbef059&language=en-US&query=${query}&page=1&include_adult=false`
+    );
+    setSearchedMovies(response.data.results);
+    setSearchParams({ query: query });
+    // setShouldLoadSearchedMovies(true);
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -30,7 +45,9 @@ const Movies = ({
           Search
         </button>
       </form>
-      {shouldLoadSearchedMovies && !searchedMovies.length ? (
+      {
+      // shouldLoadSearchedMovies && 
+      !searchedMovies.length ? (
         <p>Sorry, we don't have any movies matching the search criteria.</p>
       ) : (
         <ul className={css.searchedMoviesList}>
