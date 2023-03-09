@@ -29,7 +29,7 @@ const Movies = () => {
     if (paramsQuery !== null && shouldLoadFromParams)
       getSearchedMovies(paramsQuery);
     setShouldLoadFromParams(false);
-  }, [paramsQuery, getSearchedMovies]);
+  }, [paramsQuery, getSearchedMovies, shouldLoadFromParams]);
 
   return (
     <>
