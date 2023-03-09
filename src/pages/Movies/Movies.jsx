@@ -9,13 +9,16 @@ const Movies = () => {
   const [shouldLoadFromParams, setShouldLoadFromParams] = useState(true);
   const paramsQuery = searchParams.get('query');
 
-  const getSearchedMovies = useCallback(async query => {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=0943ad551b04628807de14e8fdbef059&language=en-US&query=${query}&page=1&include_adult=false`
-    );
-    setSearchedMovies(response.data.results);
-    setSearchParams({ query: query });
-  });
+  const getSearchedMovies = useCallback(
+    async query => {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?api_key=0943ad551b04628807de14e8fdbef059&language=en-US&query=${query}&page=1&include_adult=false`
+      );
+      setSearchedMovies(response.data.results);
+      setSearchParams({ query: query });
+    },
+    [query]
+  );
 
   function handleSubmit(event) {
     event.preventDefault();
