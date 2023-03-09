@@ -17,7 +17,7 @@ const Movies = () => {
       setSearchedMovies(response.data.results);
       setSearchParams({ query: query });
     },
-    [query]
+    [setSearchParams, setSearchedMovies]
   );
 
   function handleSubmit(event) {
