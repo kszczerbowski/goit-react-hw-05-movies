@@ -16,7 +16,7 @@ const Reviews = () => {
 
   useEffect(() => {
     getMovieReviews(movieId);
-  }, []);
+  }, [movieId]);
 
   return (
     <ul>

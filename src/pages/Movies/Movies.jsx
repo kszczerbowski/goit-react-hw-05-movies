@@ -6,10 +6,8 @@ import axios from 'axios';
 const Movies = () => {
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [shouldLoadFromParams, setShouldLoadFromParams] = useState(true);
   const paramsQuery = searchParams.get('query');
-  useEffect(() => {
-    if (paramsQuery !== null) getSearchedMovies(paramsQuery);
-  }, []);
 
   async function getSearchedMovies(query) {
     const response = await axios.get(
@@ -24,7 +22,14 @@ const Movies = () => {
     const query = event.target.elements.movieName.value;
     getSearchedMovies(query);
     event.target.elements.movieName.value = '';
+    setShouldLoadFromParams(false);
   }
+
+  useEffect(() => {
+    if (paramsQuery !== null && shouldLoadFromParams)
+      getSearchedMovies(paramsQuery);
+    setShouldLoadFromParams(false);
+  }, [paramsQuery, getSearchedMovies]);
 
   return (
     <>
