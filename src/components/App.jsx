@@ -11,9 +11,6 @@ const Reviews = lazy(() => import('../pages/Reviews/Reviews'));
 
 export const App = () => {
   const [actualMovie, setActualMovie] = useState({});
-  const [actualMovieCast, setActualMovieCast] = useState([]);
-  const [actualMovieReviews, setActualMovieReviews] = useState([]);
-  useState(false);
   // eslint-disable-next-line
 
   async function getMovieDetails(id) {
@@ -21,20 +18,6 @@ export const App = () => {
       `https://api.themoviedb.org/3/movie/${id}?api_key=0943ad551b04628807de14e8fdbef059&language=en-US`
     );
     setActualMovie(response.data);
-  }
-
-  async function getMovieReviews(id) {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=0943ad551b04628807de14e8fdbef059&language=en-US&page=1`
-    );
-    const reviewsArray = response.data.results;
-    setActualMovieReviews(reviewsArray);
-  }
-
-  async function getMovieCast(id) {
-    const response = await axios.get(`
-    https://api.themoviedb.org/3/movie/${id}/credits?api_key=0943ad551b04628807de14e8fdbef059&language=en-US`);
-    setActualMovieCast(response.data.cast);
   }
 
   return (
@@ -84,15 +67,13 @@ export const App = () => {
             <Route
               path="cast"
               element={
-                <Cast getMovieCast={getMovieCast} movieCast={actualMovieCast} />
+                <Cast />
               }
             />
             <Route
               path="reviews"
               element={
                 <Reviews
-                  getMovieReviews={getMovieReviews}
-                  movieReviews={actualMovieReviews}
                 />
               }
             />

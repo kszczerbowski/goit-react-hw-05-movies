@@ -1,17 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios'
 
-const Reviews = ({ getMovieReviews, movieReviews }) => {
+const Reviews = () => {
+  const [actualMovieReviews, setActualMovieReviews] = useState([]);
   const { movieId } = useParams();
+
+  async function getMovieReviews(id) {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=0943ad551b04628807de14e8fdbef059&language=en-US&page=1`
+    );
+    const reviewsArray = response.data.results;
+    setActualMovieReviews(reviewsArray);
+  }
+
   useEffect(() => {
     getMovieReviews(movieId);
     // eslint-disable-next-line
   }, []);
   return (
     <ul>
-      {movieReviews.length ? (
-        movieReviews.map(review => (
+      {actualMovieReviews.length ? (
+        actualMovieReviews.map(review => (
           <li key={review.id}>
             <p>{review.author}</p>
             <p>{review.content}</p>

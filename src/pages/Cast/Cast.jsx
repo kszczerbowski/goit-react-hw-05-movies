@@ -1,19 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import css from './Cast.module.css';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios'
 
-const Cast = ({ getMovieCast, movieCast }) => {
+const Cast = () => {
+  const [actualMovieCast, setActualMovieCast] = useState([]);
   const { movieId } = useParams();
   useEffect(() => {
     getMovieCast(movieId);
   // eslint-disable-next-line
   }, []);
 
+  async function getMovieCast(id) {
+    const response = await axios.get(`
+    https://api.themoviedb.org/3/movie/${id}/credits?api_key=0943ad551b04628807de14e8fdbef059&language=en-US`);
+    setActualMovieCast(response.data.cast);
+  }
+
   return (
     <ul>
-      {movieCast &&
-        movieCast.map(person => (
+      {actualMovieCast &&
+        actualMovieCast.map(person => (
           <li key={person.cast_id}>
             <img
               loading="lazy"
