@@ -1,7 +1,6 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import css from './App.module.css';
 import { Route, Routes, NavLink } from 'react-router-dom';
-import axios from 'axios';
 const Cast = lazy(() => import('../pages/Cast/Cast'));
 const Home = lazy(() => import('../pages/Home/Home'));
 const MovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails'));
@@ -10,16 +9,6 @@ const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
 const Reviews = lazy(() => import('../pages/Reviews/Reviews'));
 
 export const App = () => {
-  const [actualMovie, setActualMovie] = useState({});
-  // eslint-disable-next-line
-
-  async function getMovieDetails(id) {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=0943ad551b04628807de14e8fdbef059&language=en-US`
-    );
-    setActualMovie(response.data);
-  }
-
   return (
     <div className={css.container}>
       <Suspense
@@ -55,28 +44,9 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<Movies />} />
-          <Route
-            path="/movies/:movieId"
-            element={
-              <MovieDetails
-                movie={actualMovie}
-                getMovieDetails={getMovieDetails}
-              />
-            }
-          >
-            <Route
-              path="cast"
-              element={
-                <Cast />
-              }
-            />
-            <Route
-              path="reviews"
-              element={
-                <Reviews
-                />
-              }
-            />
+          <Route path="/movies/:movieId" element={<MovieDetails />}>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import axios from 'axios'
+import axios from 'axios';
 
 const Reviews = () => {
   const [actualMovieReviews, setActualMovieReviews] = useState([]);
@@ -17,8 +16,8 @@ const Reviews = () => {
 
   useEffect(() => {
     getMovieReviews(movieId);
-    // eslint-disable-next-line
   }, []);
+
   return (
     <ul>
       {actualMovieReviews.length ? (
@@ -33,11 +32,6 @@ const Reviews = () => {
       )}
     </ul>
   );
-};
-
-Reviews.propTypes = {
-  getMovieReviews: PropTypes.func,
-  movieReviews: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Reviews;

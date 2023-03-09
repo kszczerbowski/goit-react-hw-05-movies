@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import css from './MovieDetails.module.css';
+import axios from 'axios';
 import {
   Link,
   Outlet,
@@ -7,19 +8,26 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-const MovieDetails = ({ getMovieDetails, movie }) => {
+const MovieDetails = () => {
+  const [actualMovie, setActualMovie] = useState({});
   const location = useLocation();
   const previousLocation = location.state.from;
   const navigate = useNavigate();
   const navigateBack = () => navigate(`${previousLocation}`);
-
   const { movieId } = useParams();
+
+  async function getMovieDetails(id) {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=0943ad551b04628807de14e8fdbef059&language=en-US`
+    );
+    setActualMovie(response.data);
+  }
+
   useEffect(() => {
     getMovieDetails(movieId);
-    // eslint-disable-next-line
   }, []);
+
   return (
     <>
       <button onClick={navigateBack} type="button" className={css.backButton}>
@@ -30,23 +38,25 @@ const MovieDetails = ({ getMovieDetails, movie }) => {
           <img
             className={css.poster}
             src={
-              !!movie.poster_path
-                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              !!actualMovie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${actualMovie.poster_path}`
                 : `https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png`
             }
             alt="movie poster"
           />
         </div>
         <div className={css.info}>
-          <h2 className={css.title}>{movie.title}</h2>
+          <h2 className={css.title}>{actualMovie.title}</h2>
           <p className={css.score}>
-            User Score: {(movie.vote_average * 10).toFixed(0)}%
+            User Score: {(actualMovie.vote_average * 10).toFixed(0)}%
           </p>
           <h3 className={css.overviewHeader}>Overview</h3>
-          <p className={css.overview}>{movie.overview}</p>
+          <p className={css.overview}>{actualMovie.overview}</p>
           <h3 className={css.genresHeader}>Genres</h3>
           <p className={css.genres}>
-            {movie.genres && movie.genres.map(record => record.name).join(' ')}
+            {actualMovie.genres && !!actualMovie.genres.length
+              ? actualMovie.genres.map(record => record.name).join(' ')
+              : 'Sorry, no genres were specified for this movie.'}
           </p>
         </div>
         <div className={css.additionalInfo}>
@@ -68,11 +78,6 @@ const MovieDetails = ({ getMovieDetails, movie }) => {
       </section>
     </>
   );
-};
-
-MovieDetails.propTypes = {
-  getMovieDetails: PropTypes.func,
-  movie: PropTypes.object,
 };
 
 export default MovieDetails;

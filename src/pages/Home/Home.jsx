@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import css from './Home.module.css';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import axios from 'axios'
+import axios from 'axios';
 
-const Home = (
-  // { clearMoviesPage }
-  ) => {
+const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   async function getTrendingMovies() {
@@ -18,9 +15,7 @@ const Home = (
   }
 
   useEffect(() => {
-    // clearMoviesPage();
     getTrendingMovies();
-    // eslint-disable-next-line
   }, []);
 
   return (
@@ -51,11 +46,6 @@ const Home = (
       </ul>
     </>
   );
-};
-
-Home.propTypes = {
-  trendingMovies: PropTypes.arrayOf(PropTypes.object),
-  clearMoviesPage: PropTypes.func,
 };
 
 export default Home;
