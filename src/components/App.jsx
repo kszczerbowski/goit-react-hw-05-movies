@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import css from './App.module.css';
 import { Route, Routes, NavLink } from 'react-router-dom';
+import { Loading } from './Loading/Loading';
 const Cast = lazy(() => import('../pages/Cast/Cast'));
 const Home = lazy(() => import('../pages/Home/Home'));
 const MovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails'));
@@ -11,46 +12,79 @@ const Reviews = lazy(() => import('../pages/Reviews/Reviews'));
 export const App = () => {
   return (
     <div className={css.container}>
-      <Suspense
-        fallback={
-          <img
-            src="https://cdn.dribbble.com/users/77598/screenshots/12570694/media/8eaa19b2448ee8719f559e4d1ec931bc.gif"
-            alt="Loading screen..."
+      <header className={css.header}>
+        <nav className={css.navigation}>
+          <NavLink
+            className={css.navLink}
+            to="/"
+            style={({ isActive }) => ({
+              color: isActive ? '#D2042D' : '#00008b',
+            })}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            className={css.navLink}
+            to="/movies"
+            style={({ isActive }) => ({
+              color: isActive ? '#D2042D' : '#00008b',
+            })}
+          >
+            Movies
+          </NavLink>
+        </nav>
+      </header>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<Loading />}>
+              <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/movies"
+          element={
+            <Suspense fallback={<Loading />}>
+              <Movies />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/movies/:movieId"
+          element={
+            <Suspense fallback={<Loading />}>
+              <MovieDetails />
+            </Suspense>
+          }
+        >
+          <Route
+            path="cast"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Cast />
+              </Suspense>
+            }
           />
-        }
-      >
-        <header className={css.header}>
-          <nav className={css.navigation}>
-            <NavLink
-              className={css.navLink}
-              to="/"
-              style={({ isActive }) => ({
-                color: isActive ? '#D2042D' : '#00008b',
-              })}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              className={css.navLink}
-              to="/movies"
-              style={({ isActive }) => ({
-                color: isActive ? '#D2042D' : '#00008b',
-              })}
-            >
-              Movies
-            </NavLink>
-          </nav>
-        </header>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:movieId" element={<MovieDetails />}>
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Reviews />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+          <Route
+            path="reviews"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Reviews />
+              </Suspense>
+            }
+          />
+        </Route>
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<Loading />}>
+              <NotFound />
+            </Suspense>
+          }
+        />
+      </Routes>
     </div>
   );
 };
